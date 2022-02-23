@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { usePronostico } from '../hooks/usePronostico';
 import { useSemana } from '../hooks/useSemana';
 import { FormularioCiudad } from './FormularioCiudad';
+import { Spinner } from './Spinner';
 import { TablaSemanal } from './TablaSemanal';
 
 let fecha= new Date();
@@ -20,6 +21,10 @@ export const Formulario = () => {
     const [consultar, setConsultar] = useState(false)
     
     const [error, setError] = useState(false)
+
+    const [cargando, setCargando] = useState(false);
+
+    const [ciudadRepetida, setCiudadRepetida] = useState(false);
     
     const semana = useSemana(hoy);
     
@@ -33,7 +38,6 @@ export const Formulario = () => {
                 const respuestaReservamos = await fetch(apiReservamos)
                 const resultadoReservamos = await respuestaReservamos.json()
                 const { lat, long, city_name } = resultadoReservamos[0]
-                console.log(lat, long, city_name)
 
                 // Consultando la API de OpenWeatherMap
                 const apiKey = 'a5a47c18197737e8eeca634cd6acb581'
@@ -57,6 +61,7 @@ export const Formulario = () => {
                 
                 // Regresar consultar a falso para hacer multiples busquedas
                 setConsultar(false)
+                setCargando(false)
                 setBusqueda('')
             }
         }
@@ -73,9 +78,16 @@ export const Formulario = () => {
             setError(true) 
             return;
         }
+        if (state.some(e => e.ciudad === busqueda)) {
+            setCiudadRepetida(true);
+            return;
+        }
         setError(false)
+        setCiudadRepetida(false);
         setConsultar(true)
+        setCargando(true)
     }
+    console.log(ciudadRepetida)
   return (
     <div>
         {// Cargando componente encargado de la busqueda de la ciudad
@@ -85,9 +97,12 @@ export const Formulario = () => {
             busqueda={busqueda}
             setBusqueda={setBusqueda}
             error={error}
+            ciudadRepetida={ciudadRepetida}
         />
         {
             // Validando que haya contenido en el state de ciudades
+            cargando ?
+            <Spinner/> :
             state.length>0 ? 
             <table className="table">
             <thead>

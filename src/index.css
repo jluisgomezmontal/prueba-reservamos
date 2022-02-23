@@ -105,6 +105,7 @@ table {
   margin-top: 10px;
   padding: 5px;
   border-radius: 8px;
+  width: 100%;
 }
 
 @media (min-width: 980px) {
@@ -119,19 +120,25 @@ tr {
 
 tr td {
   font-size: 8px;
+  text-align: center;
 }
 
 tr td:first-child {
+  text-align: left;
   color: var(--blanco);
   font-size: 10px;
+  vertical-align: center;
 }
 tr td:last-child {
   display: none;
 }
 tr th:first-child {
   text-align: left;
+  max-width: 30px;
 }
-
+tr th {
+  max-width: 30px;
+}
 td span {
   font-weight: bolder;
 }
@@ -146,5 +153,16 @@ td span {
 
   tr th:first-child {
     min-width: 120px;
+  }
+}
+
+td img {
+  margin: 0 auto;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  td img {
+    max-width: 35px;
   }
 }

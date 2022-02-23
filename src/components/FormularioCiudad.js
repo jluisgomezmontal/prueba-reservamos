@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const FormularioCiudad = ({handleSubmit, busqueda, setBusqueda, error}) => {
+export const FormularioCiudad = ({handleSubmit, busqueda, setBusqueda, error,ciudadRepetida}) => {
   return (
     <form onSubmit={handleSubmit}>
 
@@ -14,7 +14,8 @@ export const FormularioCiudad = ({handleSubmit, busqueda, setBusqueda, error}) =
             onChange={e=>setBusqueda(e.target.value)}
         />
                     {
-        error ? <p className="error">Ingresa una ciudad</p> : null
+        error ? <p className="error">Ingresa una ciudad</p> :
+        ciudadRepetida ? <p className="error">La ciudad ya esta en la lista</p> : null
     }
     </div>
     
