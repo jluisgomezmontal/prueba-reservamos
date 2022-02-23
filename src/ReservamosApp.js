@@ -6,7 +6,7 @@ export const ReservamosApp = () => {
   <div>
       <header>ReservamosApp</header>
       <div className="contenedor">
-        <h2>Compara la temperatura de diversas ciudades</h2>
+        <h2>Compare la temperatura de diversas ciudades</h2>
         <Formulario/>
       </div>
   </div>

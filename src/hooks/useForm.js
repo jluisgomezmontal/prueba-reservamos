@@ -1,5 +1,6 @@
 import { useState } from "react"
 
+// Hook encargado de manejar formularios
 
 export const useForm = ( initialState = {} ) => {
     

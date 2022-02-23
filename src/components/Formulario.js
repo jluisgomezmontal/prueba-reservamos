@@ -3,7 +3,7 @@ import { usePronostico } from '../hooks/usePronostico';
 import { useSemana } from '../hooks/useSemana';
 import { FormularioCiudad } from './FormularioCiudad';
 import { Spinner } from './Spinner';
-import { TablaSemanal } from './TablaSemanal';
+import { Table } from './Table';
 
 let fecha= new Date();
 let hoy = fecha.getDay()
@@ -39,6 +39,16 @@ export const Formulario = () => {
                 const resultadoReservamos = await respuestaReservamos.json()
                 const { lat, long, city_name } = resultadoReservamos[0]
 
+                // Validando que no haya ciudades en la tabla
+                if (state.some(e => e.ciudad === city_name)) {
+                    setCiudadRepetida(true);
+                    setCargando(false);
+                    
+                    return;
+                }
+
+
+
                 // Consultando la API de OpenWeatherMap
                 const apiKey = 'a5a47c18197737e8eeca634cd6acb581'
                 const apiOpenWeatherMap = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&exclude=current,minutely,hourly,alerts&appid=${apiKey}`
@@ -58,17 +68,19 @@ export const Formulario = () => {
                     payload: newInput
                 }
                 dispatch(action)
-                
-                // Regresar consultar a falso para hacer multiples busquedas
-                setConsultar(false)
                 setCargando(false)
-                setBusqueda('')
+
+                
             }
         }
         consultarAPI();
+        // Regresar consultar a falso para hacer multiples busquedas
+        setConsultar(false)
+        setCiudadRepetida(false);
+        setBusqueda('')
     }, [consultar])
 
-    // Manejando el subit del formulario
+    // Manejando el submit del formulario
     const handleSubmit = e => {
         //evitar que recargue el componente
         e.preventDefault();
@@ -78,16 +90,11 @@ export const Formulario = () => {
             setError(true) 
             return;
         }
-        if (state.some(e => e.ciudad === busqueda)) {
-            setCiudadRepetida(true);
-            return;
-        }
+
         setError(false)
-        setCiudadRepetida(false);
         setConsultar(true)
         setCargando(true)
     }
-    console.log(ciudadRepetida)
   return (
     <div>
         {// Cargando componente encargado de la busqueda de la ciudad
@@ -104,32 +111,12 @@ export const Formulario = () => {
             cargando ?
             <Spinner/> :
             state.length>0 ? 
-            <table className="table">
-            <thead>
-            <tr>
-                <th>Ciudad</th>
-                {
-                    // Imprimiendo los dias de la semana
-                    semana.map( (s,index) =>(
-                        <th key={index}>{s}</th>
-                    ))
-                }
 
-            </tr>
-            </thead>
-            <tbody>
-            {
-                // Imprimiendo las temperaturas de los proximos 7 dias
-                state.map( ({id, ciudad, dias})=>(
-                    <TablaSemanal
-                    key={id}
-                    ciudad={ciudad}
-                    dias={dias}
-                    />
-                ))
-            }
-            </tbody>
-            </table>
+            // Renderizando la tabla
+            <Table
+            semana={semana}
+            state={state}
+            />
             :null
         }
     </div>

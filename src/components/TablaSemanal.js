@@ -4,6 +4,7 @@ import { IconTemp } from './IconTemp';
 export const TablaSemanal = ({ciudad,dias}) => {
     const k = 273.15;
 
+    // Renderizando componente de la tabla semanal
   return (  
         <tr>
             <td >{ciudad}</td>

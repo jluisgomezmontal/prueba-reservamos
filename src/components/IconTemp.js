@@ -1,9 +1,10 @@
 import React from 'react';
 
 export const IconTemp = ({temp, ciudad}) => {
+  // Validando la temperatura de la ciudad y mstrando su respectico icono
   return <div>
       {           
-        temp.max > 301.4?
+        temp.max > 301.7?
         <img
         alt={ciudad}
         src={`https://ssl.gstatic.com/onebox/weather/48/sunny.png`}

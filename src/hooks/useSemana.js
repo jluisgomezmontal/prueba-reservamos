@@ -1,3 +1,5 @@
+// Funcion encargado de encontrar el dia de la semana actual
+
 export const useSemana = ( dia ) => {
     
     switch ( dia){
