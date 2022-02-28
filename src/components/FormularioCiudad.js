@@ -1,12 +1,13 @@
 import React from 'react';
+import { ConsejoComponente } from './ConsejoComponente';
 
-export const FormularioCiudad = ({handleSubmit, busqueda, setBusqueda, error,ciudadRepetida}) => {
+export const FormularioCiudad = ({handleSubmit, busqueda, setBusqueda, error,ciudadRepetida, consejos}) => {
     
   // Componente encargado de renderizar del formulario
   return (
     <form onSubmit={handleSubmit}>
 
-    <div className=''>
+    <div >
         <label htmlFor="ciudad">Ciudad: </label>
         <input
             type="text"
@@ -20,12 +21,19 @@ export const FormularioCiudad = ({handleSubmit, busqueda, setBusqueda, error,ciu
         error ? <p className="error">Ingrese una ciudad</p> :
         ciudadRepetida ? <p className="error">La ciudad ya esta en la lista</p> : null
     }
+    {
+        consejos.length > 2 &&
+        <ConsejoComponente
+        consejos={consejos}
+        setBusqueda={setBusqueda}
+        />
+    }
     </div>
     
     <input
         type="submit"
         value="Buscar"
-        className=""
+        className="buscador"
     />
     
 

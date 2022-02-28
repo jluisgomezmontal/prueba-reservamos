@@ -17,6 +17,9 @@ export const Formulario = () => {
     const [state, dispatch] = useReducer(usePronostico, [],init)
     
     const [busqueda, setBusqueda] = useState('')
+
+    const [consejos, setConsejos] = useState([]);
+
     
     const [consultar, setConsultar] = useState(false)
     
@@ -33,11 +36,14 @@ export const Formulario = () => {
     useEffect(() => {
         const consultarAPI = async () => {
             if(consultar){
+                console.log(busqueda)
                 // Consultando la API de RESERVAMOS
                 const apiReservamos = `https://search.reservamos.mx/api/v2/places?q=${busqueda}`
                 const respuestaReservamos = await fetch(apiReservamos)
                 const resultadoReservamos = await respuestaReservamos.json()
                 const { lat, long, city_name } = resultadoReservamos[0]
+                setConsejos([...new Set(resultadoReservamos.map(r=>r.city_name))])
+
 
                 // Validando que no haya ciudades en la tabla
                 if (state.some(e => e.ciudad === city_name)) {
@@ -105,6 +111,7 @@ export const Formulario = () => {
             setBusqueda={setBusqueda}
             error={error}
             ciudadRepetida={ciudadRepetida}
+            consejos={consejos}
         />
         {
             // Validando que haya contenido en el state de ciudades

@@ -28,6 +28,10 @@ header {
   margin: 0 auto;
 }
 
+#humedad {
+  color: #fff;
+}
+
 .contenedor {
   max-width: 95%;
   margin: 0 auto;
@@ -71,7 +75,7 @@ input[type="text"] {
   transition: 0.5s;
   border-radius: 8px;
 }
-input[type="submit"] {
+.buscador {
   width: 100%;
   padding: 10px 15px;
   margin: 8px 0;
@@ -82,7 +86,7 @@ input[type="submit"] {
   border-radius: 8px;
 }
 
-input[type="submit"]:hover {
+.buscador:hover {
   background-color: var(--claro);
 }
 
@@ -165,4 +169,26 @@ td img {
   td img {
     max-width: 35px;
   }
+}
+.consejos {
+  color: var(--claro);
+}
+.consejos h3 {
+  margin: 0;
+  font-weight: bolder;
+  text-align: left;
+}
+.consejos input:first-of-type {
+  display: none;
+}
+.consejos input {
+  background-color: var(--dark);
+  border: 1px solid var(--claro);
+  border-radius: 8px;
+  color: var(--blanco);
+  cursor: pointer;
+  display: inline-block;
+  margin: 12px 8px 12px 0;
+  font-size: 13px;
+  padding: 5px 8px;
 }
